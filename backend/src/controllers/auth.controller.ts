@@ -9,6 +9,7 @@ import {
   ResetPasswordRequest,
 } from "../types/user.types";
 import { ResponseBody } from "../types/request.types";
+import { ValidateUserRequest } from "../types/middleware.types";
 
 class AuthController {
   static async register(
@@ -98,6 +99,21 @@ class AuthController {
         message: "Password reset successfully.",
         data: null,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async me(req: ValidateUserRequest, res: Response, next: NextFunction) {
+    try {
+      if (req.user) {
+        const user = await AuthService.me(req.user._id);
+        res.status(200).send({
+          status: 200,
+          message: "User found",
+          data: user,
+        });
+      }
     } catch (error) {
       next(error);
     }

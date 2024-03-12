@@ -88,6 +88,24 @@ class AuthService {
       <p>Tu contraseña ha sido restablecida con éxito</p>`,
     });
   }
+
+  static async me(userId: string) {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new APIError({ message: "User was not found", status: 404 });
+    }
+    const payload = {
+      _id: user._id,
+      name: user.name,
+      lastname: user.lastname,
+      email: user.email,
+      is_admin: user.is_admin,
+      phone: user.phone,
+      dni: user.dni,
+    };
+    return payload;
+  }
 }
 
 export { AuthService };
