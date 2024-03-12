@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { ResponseBody } from "./request.types";
 
 export interface UserMainProps {
   _id: Types.ObjectId;
@@ -20,3 +21,10 @@ export interface UserModelProps extends UserMainProps, Document {
   resetPassword: (code: string, password: string) => Promise<void>;
   isNew: boolean;
 }
+
+export type RegisterRequestBody = Omit<UserMainProps, "salt">;
+
+export type RegisterResponse = ResponseBody<{
+  user: Omit<UserMainProps, "password" | "salt">;
+  token?: string;
+} | null>;
