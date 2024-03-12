@@ -1,5 +1,11 @@
 version: "1.0.0"
 services:
+  ehdb:
+    image: mongo:7.0.6
+    container_name: ${MONGO_DB_NAME}
+    restart: always
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
   local:
     build:
       context: .
@@ -11,6 +17,7 @@ services:
       - ./.env
     container_name: employeer_hub_back
     ports:
-      - 3001:3001
-    tty: true
+      - ${PORT}:${PORT}
     entrypoint: ["npm", "run", "dev"]
+    depends_on:
+      - ehdb
