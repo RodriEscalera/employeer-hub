@@ -48,3 +48,22 @@ export interface ResetPasswordRequest {
   code: string;
   newPassword: string;
 }
+
+export type GetUsersResponse = ResponseBody<UserMainProps[]>;
+
+export type CreateUserRequest = Omit<
+  UserMainProps,
+  "salt" | "resetToken" | "is_admin"
+>;
+
+export interface UserUpdateRequest {
+  _id?: Types.ObjectId;
+  name?: string;
+  lastname?: string;
+  password?: string;
+  email?: string;
+  phone?: number;
+  dni?: number;
+  salt?: string;
+  is_admin?: boolean;
+}

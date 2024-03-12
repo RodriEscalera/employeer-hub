@@ -95,6 +95,7 @@ class AuthService {
     if (!user) {
       throw new APIError({ message: "User was not found", status: 404 });
     }
+
     const payload = {
       _id: user._id,
       name: user.name,
