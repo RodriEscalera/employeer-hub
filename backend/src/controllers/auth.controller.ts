@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 import {
+  GenerateUpdatePasswordTokenRequest,
   LoginRequestBody,
   LoginResponse,
   RegisterRequestBody,
   RegisterResponse,
+  ResetPasswordRequest,
 } from "../types/user.types";
+import { ResponseBody } from "../types/request.types";
 
 class AuthController {
   static async register(
@@ -15,7 +18,7 @@ class AuthController {
       RegisterRequestBody,
       Record<string, never>
     >,
-    res: Response,
+    res: Response<RegisterResponse>,
     next: NextFunction
   ) {
     try {
@@ -37,7 +40,7 @@ class AuthController {
       LoginRequestBody,
       Record<string, never>
     >,
-    res: Response,
+    res: Response<LoginResponse>,
     next: NextFunction
   ) {
     try {
@@ -49,6 +52,51 @@ class AuthController {
         data: { user, token },
         status: 200,
         message: "User logged in successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async generateUpdatePasswordToken(
+    req: Request<
+      Record<string, never>,
+      ResponseBody,
+      GenerateUpdatePasswordTokenRequest,
+      Record<string, never>
+    >,
+    res: Response<ResponseBody>,
+    next: NextFunction
+  ) {
+    try {
+      await AuthService.generateUpdatePasswordToken(req.body.email);
+
+      res.status(200).send({
+        status: 200,
+        message: "Started reset password process.",
+        data: null,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async resetPassword(
+    req: Request<
+      Record<string, never>,
+      ResponseBody,
+      ResetPasswordRequest,
+      Record<string, never>
+    >,
+    res: Response<ResponseBody>,
+    next: NextFunction
+  ) {
+    try {
+      await AuthService.resetPassword(req.body);
+      res.status(200).send({
+        status: 200,
+        message: "Password reset successfully.",
+        data: null,
       });
     } catch (error) {
       next(error);
