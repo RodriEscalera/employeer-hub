@@ -1,0 +1,16 @@
+version: "1.0.0"
+services:
+  local:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: employeer_hub_back
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - ./.env
+    container_name: employeer_hub_back
+    ports:
+      - 3001:3001
+    tty: true
+    entrypoint: ["npm", "run", "dev"]
