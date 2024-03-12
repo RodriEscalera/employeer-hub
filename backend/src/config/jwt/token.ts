@@ -1,19 +1,14 @@
 import { sign, verify } from "jsonwebtoken";
-import { Types } from "mongoose";
 import { APIError } from "../../utils/error.utils";
+import { Payload, TokenContent } from "../../types/token.types";
 
-interface Payload {
-  _id: Types.ObjectId;
-  is_admin: boolean;
-}
-
-const generateToken = (payload: Payload): string => {
+const generateToken = (payload: Payload, expiration?: string): string => {
   const secret = process.env.JWT_SECRET as string;
   const token = sign(
     { user: { _id: payload._id, is_admin: payload.is_admin } },
     secret,
     {
-      expiresIn: "7d",
+      expiresIn: expiration || "7d",
     }
   );
   if (!token)
@@ -24,8 +19,9 @@ const generateToken = (payload: Payload): string => {
 
   return token;
 };
-const validateToken = (token: string) => {
-  const user = verify(token, process.env.JWT_SECRET as string);
+
+const validateToken = (token: string): TokenContent => {
+  const user = verify(token, process.env.JWT_SECRET as string) as TokenContent;
   return user;
 };
 export { generateToken, validateToken };

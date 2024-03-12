@@ -11,6 +11,7 @@ export interface UserMainProps {
   dni: number;
   salt: string;
   is_admin: boolean;
+  resetToken?: string;
 }
 
 export interface UserModelProps extends UserMainProps, Document {
@@ -36,4 +37,14 @@ export type LoginResponse = ResponseBody<{
 export interface LoginRequestBody {
   email: string;
   password: string;
+}
+
+export interface GenerateUpdatePasswordTokenRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  code: string;
+  newPassword: string;
 }
