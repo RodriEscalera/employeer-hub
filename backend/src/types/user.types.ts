@@ -26,5 +26,14 @@ export type RegisterRequestBody = Omit<UserMainProps, "salt">;
 
 export type RegisterResponse = ResponseBody<{
   user: Omit<UserMainProps, "password" | "salt">;
-  token?: string;
 } | null>;
+
+export type LoginResponse = ResponseBody<{
+  user: Omit<UserMainProps, "password" | "salt">;
+  token: string;
+}>;
+
+export interface LoginRequestBody {
+  email: string;
+  password: string;
+}
