@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const connectToDB = async () => {
   try {
@@ -21,7 +21,7 @@ const createDatabase = async () => {
       .hasNext();
     if (!exists) {
       console.log(`Creating database '${process.env.MONGO_DB_NAME}'`);
-      await connection.db.createCollection(process.env.MONGO_DB_NAME);
+      await connection.db.createCollection(`${process.env.MONGO_DB_NAME}`);
     }
     await connection.close();
   } catch (error) {
@@ -30,6 +30,7 @@ const createDatabase = async () => {
 };
 
 const syncDB = async (): Promise<void> => {
+  mongoose.set("debug", false);
   await createDatabase();
   await connectToDB();
 };
