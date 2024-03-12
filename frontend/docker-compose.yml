@@ -11,6 +11,6 @@ services:
       - ./.env
     container_name: employeer_hub_front
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
     tty: true
     entrypoint: ["npm", "run", "dev"]
