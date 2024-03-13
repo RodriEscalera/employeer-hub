@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface InputsCollectionProps {
   [key: string]: {
     inputName: string;
@@ -7,8 +5,6 @@ export interface InputsCollectionProps {
     type: string;
     isValid: boolean;
     label: string;
-    regex: RegExp;
-    errorMessage: string;
   };
 }
 
