@@ -29,6 +29,28 @@ class UserController {
     }
   }
 
+  static async findOneUser(
+    req: Request<
+      { _id: string },
+      Response,
+      Record<string, never>,
+      Record<string, never>
+    >,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const user = await UserService.findOneUser(req.params._id);
+      res.status(200).json({
+        data: user,
+        status: 200,
+        message: "User found successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async createUser(
     req: Request<
       Record<string, never>,

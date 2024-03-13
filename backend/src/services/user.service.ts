@@ -3,6 +3,14 @@ import { CreateUserRequest, UserUpdateRequest } from "../types/user.types";
 import { APIError } from "../utils/error.utils";
 
 class UserService {
+  static async findOneUser(_id: string) {
+    const user = await User.find({ _id });
+    if (!user) {
+      throw new APIError({ message: "User not found.", status: 404 });
+    }
+    return user;
+  }
+
   static async getUsers() {
     const users = await User.find({});
     if (!users) {
