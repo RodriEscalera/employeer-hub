@@ -8,6 +8,7 @@ const envList = [
   "OAUTH2_CLIENT_SECRET",
   "OAUTH2_REFRESH_TOKEN",
   "OAUTH2_EMAIL",
+  "MONGO_URI",
 ];
 export const envs = (() => {
   if (
@@ -19,7 +20,8 @@ export const envs = (() => {
     !process.env.OAUTH2_CLIENT_ID ||
     !process.env.OAUTH2_CLIENT_SECRET ||
     !process.env.OAUTH2_REFRESH_TOKEN ||
-    !process.env.OAUTH2_EMAIL
+    !process.env.OAUTH2_EMAIL ||
+    !process.env.MONGO_URI
   ) {
     const missingEnvs: string[] = [];
 
