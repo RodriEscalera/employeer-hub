@@ -17,7 +17,6 @@ class AuthService {
         status: 500,
       });
     }
-    return { user: newUser };
   }
 
   static async login(userBody: LoginRequestBody) {
@@ -98,7 +97,7 @@ class AuthService {
 
     const payload = {
       _id: user._id,
-      name: user.name,
+      firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
       is_admin: user.is_admin,

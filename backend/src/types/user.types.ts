@@ -3,7 +3,7 @@ import { ResponseBody } from "./request.types";
 
 export interface UserMainProps {
   _id: Types.ObjectId;
-  name: string;
+  firstname: string;
   lastname: string;
   password: string;
   email: string;
@@ -58,7 +58,7 @@ export type CreateUserRequest = Omit<
 
 export interface UserUpdateRequest {
   _id?: Types.ObjectId;
-  name?: string;
+  firstname?: string;
   lastname?: string;
   password?: string;
   email?: string;
