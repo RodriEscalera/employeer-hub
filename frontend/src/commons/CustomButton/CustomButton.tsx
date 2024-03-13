@@ -9,9 +9,11 @@ const CustomButton: FC<CustomButtonProps> = ({
   disabled,
   variant,
   type,
+  ...restProps
 }) => {
   return (
     <Button
+      {...restProps}
       type={type}
       variant={variant || "contained"}
       disabled={disabled}

@@ -1,20 +1,20 @@
 "use client";
+import React, { FC, useState } from "react";
 import { Box } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import Layout from "@/commons/Layout/Layout";
-import style from "./EditUserView.module.css";
-import CustomInput from "@/commons/CustomInput/CustomInput";
+import style from "./CreateUserView.module.css";
 import CustomButton from "@/commons/CustomButton/CustomButton";
-import { ToastContainer, toast } from "react-toastify";
 import {
-  InputsCollectionPropsEditUser,
-  InputsPropsEditUser,
-} from "./EditUserView.types";
+  InputsPropsCreateUser,
+  InputsCollectionPropsCreateUser,
+} from "./CreateUserView.types";
+import { registerService } from "@/services/auth.service";
+import CustomInput from "@/commons/CustomInput/CustomInput";
 import { useRouter } from "next/navigation";
-import { getOneUser, updateUser } from "@/services/user.service";
-import { useParams } from "next/navigation";
+import { createUser } from "@/services/user.service";
 
-const Inputs: FC<InputsPropsEditUser> = ({
+const Inputs: FC<InputsPropsCreateUser> = ({
   handleInputChange,
   inputsCollection,
   onSubmit,
@@ -46,73 +46,16 @@ const Inputs: FC<InputsPropsEditUser> = ({
         className={style["button"]}
         variant="contained"
       >
-        EDIT
+        CREATE USER
       </CustomButton>
     </form>
   );
 };
 
-const EditUserView: FC = () => {
+const CreateUserView: FC = () => {
   const router = useRouter();
-  const params = useParams<{ [key: string]: string }>();
-
-  const findUser = async (): Promise<void> => {
-    if (params._id) {
-      const response = await getOneUser(params._id);
-      const userData = response[0];
-
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
-        return {
-          ...prevState,
-          firstname: {
-            ...prevState.firstname,
-            value: userData.firstname,
-          },
-        };
-      });
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
-        return {
-          ...prevState,
-          lastname: {
-            ...prevState.lastname,
-            value: userData.lastname,
-          },
-        };
-      });
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
-        return {
-          ...prevState,
-          email: {
-            ...prevState.email,
-            value: userData.email,
-          },
-        };
-      });
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
-        return {
-          ...prevState,
-          dni: {
-            ...prevState.dni,
-            value: userData.dni,
-          },
-        };
-      });
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
-        return {
-          ...prevState,
-          phone: {
-            ...prevState.phone,
-            value: userData.phone,
-          },
-        };
-      });
-    }
-  };
-  useEffect(() => {
-    findUser();
-  }, []);
   const [inputsCollection, setInputsCollection] =
-    useState<InputsCollectionPropsEditUser>({
+    useState<InputsCollectionPropsCreateUser>({
       firstname: {
         isValid: true,
         value: "",
@@ -160,10 +103,20 @@ const EditUserView: FC = () => {
         regex: /^.{10}$/,
         errorMessage: "The phone number must be at least 10 characters long.",
       },
+      password: {
+        isValid: true,
+        value: "",
+        type: "password",
+        inputName: "password",
+        label: "Password",
+        regex: /^(?=.*\d)(?=.*[A-Z]).{8,16}$/,
+        errorMessage:
+          "the password must have at least 8 characters and a maximum of 16. It must have lowercase letters, uppercase letters and numbers.",
+      },
     });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
+    setInputsCollection((prevState: InputsCollectionPropsCreateUser) => {
       const inputName = e.target.name;
       return {
         ...prevState,
@@ -172,7 +125,7 @@ const EditUserView: FC = () => {
     });
 
     if (!inputsCollection[e.target.name].regex.test(e.target.value)) {
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
+      setInputsCollection((prevState: InputsCollectionPropsCreateUser) => {
         const inputName = e.target.name;
         return {
           ...prevState,
@@ -180,7 +133,7 @@ const EditUserView: FC = () => {
         };
       });
     } else {
-      setInputsCollection((prevState: InputsCollectionPropsEditUser) => {
+      setInputsCollection((prevState: InputsCollectionPropsCreateUser) => {
         const inputName = e.target.name;
         return {
           ...prevState,
@@ -201,19 +154,17 @@ const EditUserView: FC = () => {
       return;
     }
     try {
-      console.log(inputsCollection.firstname.value);
-      const result = await updateUser(params._id, {
+      await createUser({
         firstname: inputsCollection.firstname.value,
         lastname: inputsCollection.lastname.value,
         dni: inputsCollection.dni.value,
         phone: inputsCollection.phone.value,
         email: inputsCollection.email.value,
+        password: inputsCollection.password.value,
       });
-      console.log("result");
-      toast.success("¡Edited successfully!", { position: "top-right" });
+      toast.success("¡User created successfully!", { position: "top-right" });
     } catch (error) {
-      console.log(error);
-      toast.error("Couldn't edit.", { position: "top-right" });
+      toast.error("Couldn't create user.", { position: "top-right" });
     }
   };
 
@@ -223,7 +174,7 @@ const EditUserView: FC = () => {
       <Layout className={style["layout"]}>
         <Box className={style["container"]}>
           <Box className={style["container-title"]}>
-            <h2 className={style["title-text"]}>EDIT USER</h2>
+            <h2 className={style["title-text"]}>CREATE USER</h2>
           </Box>
           <Inputs
             onSubmit={onSubmit}
@@ -236,4 +187,4 @@ const EditUserView: FC = () => {
   );
 };
 
-export default EditUserView;
+export default CreateUserView;
