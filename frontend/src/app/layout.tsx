@@ -1,26 +1,28 @@
-import type { Metadata } from "next";
+"use client";
 import { Roboto } from "next/font/google";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-
-export const metadata: Metadata = {
-  title: "Employeer Hub",
-  description:
-    "This website deals with the management of a company's employees.",
-};
-
+import { Provider } from "react-redux";
+import store from "../state/store";
+import NavBar from "@/components/NavBar/NavBar";
+import PersistSession from "@/components/PersistSession/PersistSession";
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: JSX.Element;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${roboto.className} background-color-global`}>
-        {children}
-      </body>
-    </html>
+    <Provider store={store}>
+      <html lang="en">
+        <body className={`${roboto.className} background-color-global`}>
+          <PersistSession>
+            <NavBar />
+            {children}
+          </PersistSession>
+        </body>
+      </html>
+    </Provider>
   );
 }

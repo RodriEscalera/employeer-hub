@@ -8,6 +8,7 @@ import CustomButton from "@/commons/CustomButton/CustomButton";
 import { InputsProps, InputsCollectionProps } from "./SingUp.types";
 import { registerService } from "@/services/auth.service";
 import CustomInput from "@/commons/CustomInput/CustomInput";
+import { useRouter } from "next/navigation";
 
 const Inputs: FC<InputsProps> = ({
   handleInputChange,
@@ -48,6 +49,7 @@ const Inputs: FC<InputsProps> = ({
 };
 
 const SignUpView: FC = () => {
+  const router = useRouter();
   const [inputsCollection, setInputsCollection] =
     useState<InputsCollectionProps>({
       firstname: {
@@ -86,7 +88,7 @@ const SignUpView: FC = () => {
         inputName: "dni",
         label: "DNI",
         regex: /^.{8}$/,
-        errorMessage: "Not a valid DNI.",
+        errorMessage: "The DNI number must be at least 8 characters long.",
       },
       phone: {
         isValid: true,
@@ -95,7 +97,7 @@ const SignUpView: FC = () => {
         inputName: "phone",
         label: "Phone",
         regex: /^.{10}$/,
-        errorMessage: "Not a valid phone.",
+        errorMessage: "The phone number must be at least 10 characters long.",
       },
       password: {
         isValid: true,
@@ -105,7 +107,7 @@ const SignUpView: FC = () => {
         label: "Password",
         regex: /^(?=.*\d)(?=.*[A-Z]).{8,16}$/,
         errorMessage:
-          "Password must contains at least 8 characters and max 16, lowercase and uppercase letters.",
+          "the password must have at least 8 characters and a maximum of 16. It must have lowercase letters, uppercase letters and numbers.",
       },
     });
 
@@ -154,9 +156,10 @@ const SignUpView: FC = () => {
         dni: inputsCollection.dni.value,
         phone: inputsCollection.phone.value,
         email: inputsCollection.email.value,
-        password: inputsCollection.firstname.value,
+        password: inputsCollection.password.value,
       });
       toast.success("¡Sign up successfully!", { position: "top-right" });
+      router.push("/login");
     } catch (error) {
       toast.error("Couldn't sign up.", { position: "top-right" });
     }

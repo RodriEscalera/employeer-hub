@@ -1,0 +1,11 @@
+.app-bar {
+  width: 100%;
+  position: fixed;
+  background-color: #319b99;
+}
+
+.navbar-logo {
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
