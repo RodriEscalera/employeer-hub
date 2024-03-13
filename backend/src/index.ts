@@ -13,12 +13,11 @@ import { envs } from "./config/env/env.config";
 import { allRoutes } from "./routes";
 import { APIError } from "./utils/error.utils";
 
-const { PORT, CLIENT_HOST } = envs;
 const app: Express = express();
 const options: cors.CorsOptions = {
-  origin: [CLIENT_HOST],
+  origin: [`${process.env.CLIENT_HOST}`],
 };
-
+envs;
 app.use(morgan("dev"));
 app.use(cors(options));
 app.use(json());
@@ -42,8 +41,8 @@ app.use(
 
 (async () => {
   await syncDB();
-  app.listen(PORT, () => {
+  app.listen(`${process.env.PORT}`, () => {
     // eslint-disable-next-line no-console
-    console.log(`Listening on port ${PORT}`);
+    console.log(`Listening on port ${process.env.PORT}`);
   });
 })();

@@ -34,15 +34,4 @@ export const envs = (() => {
       )}.`
     );
   }
-  return {
-    PORT: process.env.PORT,
-    CLIENT_HOST: process.env.CLIENT_HOST,
-    MONGO_DB_NAME: process.env.MONGO_DB_NAME,
-    MONGO_PORT: process.env.MONGO_PORT,
-    JWT_SECRET: process.env.JWT_SECRET,
-    OAUTH2_CLIENT_ID: process.env.OAUTH2_CLIENT_ID,
-    OAUTH2_CLIENT_SECRET: process.env.OAUTH2_CLIENT_SECRET,
-    OAUTH2_REFRESH_TOKEN: process.env.OAUTH2_REFRESH_TOKEN,
-    OAUTH2_EMAIL: process.env.OAUTH2_EMAIL,
-  } as const;
 })();
