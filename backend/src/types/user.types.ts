@@ -49,6 +49,8 @@ export interface ResetPasswordRequest {
   newPassword: string;
 }
 
+export type FindOneUserResponse = ResponseBody<UserMainProps>;
+
 export type GetUsersResponse = ResponseBody<UserMainProps[]>;
 
 export type CreateUserRequest = Omit<
