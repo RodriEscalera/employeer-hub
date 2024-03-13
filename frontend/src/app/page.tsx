@@ -1,7 +1,5 @@
+import HomeView from "../components/HomeView/HomeView";
+
 export default function Home() {
-  return (
-    <div>
-      <h1>Employeer Hub</h1>
-    </div>
-  );
+  return <HomeView />;
 }

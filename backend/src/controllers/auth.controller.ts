@@ -23,9 +23,9 @@ class AuthController {
     next: NextFunction
   ) {
     try {
-      const newUser = await AuthService.register(req.body);
+      await AuthService.register(req.body);
       res.status(200).json({
-        data: newUser,
+        data: null,
         status: 200,
         message: "User was registered successfully.",
       });
@@ -46,9 +46,7 @@ class AuthController {
   ) {
     try {
       const userData = await AuthService.login(req.body);
-
       const { user, token } = userData;
-
       res.status(200).json({
         data: { user, token },
         status: 200,
