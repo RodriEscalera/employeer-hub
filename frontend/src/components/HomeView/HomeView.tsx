@@ -21,7 +21,7 @@ const HomeView: FC = () => {
       {user._id.length > 0 ? (
         <>
           <Link href="/management">
-            <CustomButton variant="outlined">START TO MANAGE</CustomButton>
+            <CustomButton variant="outlined">LET'S MANAGE</CustomButton>
           </Link>
         </>
       ) : (

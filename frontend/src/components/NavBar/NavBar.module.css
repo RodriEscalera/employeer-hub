@@ -1,11 +1,24 @@
 .app-bar {
   width: 100%;
   position: fixed;
+}
+
+.tool-bar {
   background-color: #319b99;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar-logo {
   margin-left: 1rem;
   font-size: 1rem;
   font-weight: 700;
+  color: white;
+  text-decoration: none;
+  width: 2rem;
+}
+
+.link-app-bar {
+  text-decoration: none;
+  width: 2rem;
 }

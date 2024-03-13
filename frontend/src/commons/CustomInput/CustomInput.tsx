@@ -9,6 +9,7 @@ const CustomInput: FC<CustomInputProps> = ({
   name,
   type,
   isValid,
+  placeholder,
 }) => {
   return (
     <input
@@ -18,6 +19,7 @@ const CustomInput: FC<CustomInputProps> = ({
       className={`${className} ${isValid ? style["input-valid"] : style["input-invalid"]}`}
       name={name}
       type={type}
+      placeholder={placeholder}
     />
   );
 };

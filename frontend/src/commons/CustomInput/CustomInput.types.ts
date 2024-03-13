@@ -6,4 +6,5 @@ interface CustomInputProps {
   name: string;
   type: string;
   isValid: boolean;
+  placeholder?: string;
 }
